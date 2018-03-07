@@ -106,7 +106,7 @@ window.addEventListener('load', function()  {
 		getConstantParameters ();
 		console.log("Absterge is starting ...");
 		//$("div > div > div > div.fbTimelineSection > div > div > div > div > ul > li").each(function() {
-    $("#activity_search_results>div>ul>li").each(function() {
+    $("#activity_search_results>div>ul>li, div.fbTimelineLogStream>div>div>ul>li").each(function() {
 			var ministory = $(this);
 			ministory.find('a').each(function(){
         alert
@@ -148,10 +148,15 @@ window.addEventListener('load', function()  {
         setTimeout(function() {$(window).trigger('/BSAb/ScrollSearchResultsClick');}, 2000)
       }
     });
+  	
+  	$(window).on('/BSAb/RemoveTimelineLogClick', function() {
+      $("#fbTimelineLogBody").remove();
+    });
 
 	// Include the 
-	$("._2o3t").append('<div id="navAbsterge" class="clearfix mtm"> <a id="cmdAbsterge" class="uiButton" role="button" href="#"><span class="uiButtonText">Absterge</span></a> <a id="btnScrollSearchResults" class="uiButton" role="button" href="#"><span class="uiButtonText">Scroll search results</span></a></div>');
+	$("._2o3t").append('<div id="navAbsterge" class="clearfix mtm"> <a id="btnRemoveTimelineLogResults" class="uiButton" role="button" href="#"><span class="uiButtonText">Remove Timeline Log</span></a> <a id="btnScrollSearchResults" class="uiButton" role="button" href="#"><span class="uiButtonText">Scroll search results</span></a> <a id="cmdAbsterge" class="uiButton" role="button" href="#"><span class="uiButtonText">Absterge</span></a></div>');
   $("#btnScrollSearchResults").on("click", function() {$(window).trigger('/BSAb/ScrollSearchResultsClick');});
+  $("#btnRemoveTimelineLogResults").on("click", function() {$(window).trigger('/BSAb/RemoveTimelineLogClick');});
 	var pathname = window.location.pathname;    
 	if ( pathname.indexOf('/allactivity') === -1 ) {
 		$('#cmdAbsterge').click(function () {
