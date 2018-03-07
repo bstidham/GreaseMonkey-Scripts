@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           BSAbsterge
+// @name           BS Absterge
 // @namespace      https://userscripts-mirror.org/users/astojanov
 // @include        http://*.facebook.com/*
 // @include        https://*.facebook.com/*
@@ -118,6 +118,7 @@ window.addEventListener('load', function()  {
 							//processMinistory (ministory, $(this));
               // remove "/confirm" from "/delete/confrim"
               $(this).attr("ajaxify", $(this).attr("ajaxify").replace("/confirm", ""));
+              console.log("clicking: " + $(this).attr("ajaxify"));
               this.click();
 						}
 					})}, abstergeProcessingTimeout);
@@ -129,9 +130,28 @@ window.addEventListener('load', function()  {
 		//setTimeout(onAbstergeClick, 3000);
 	};
 
+    /*
+     * Handlers
+     */
+    $(window).on('/BSAb/ScrollSearchResultsClick', function() {
+      smra = $('#search_more_results a');
+      tries = 0;
+      max_tries = 5;
+      while (!smra.length && tries <= max_tries) {
+        smra = $('#search_more_results a');
+        console.log("try " + tries + ", smra: " + smra);
+        sleep(2000);
+      }
+      if (smra.length) {
+        console.log("clicking 'more seach results' button");
+      	smra[0].click();
+        setTimeout(function() {$(window).trigger('/BSAb/ScrollSearchResultsClick');}, 2000)
+      }
+    });
 
 	// Include the 
-	$("._2o3t").append('<div id="navAbsterge" class="navItem middleItem"><a id="cmdAbsterge" class="navLink bigPadding" href="#">Absterge</a></div>');
+	$("._2o3t").append('<div id="navAbsterge" class="clearfix mtm"> <a id="cmdAbsterge" class="uiButton" role="button" href="#"><span class="uiButtonText">Absterge</span></a> <a id="btnScrollSearchResults" class="uiButton" role="button" href="#"><span class="uiButtonText">Scroll search results</span></a></div>');
+  $("#btnScrollSearchResults").on("click", function() {$(window).trigger('/BSAb/ScrollSearchResultsClick');});
 	var pathname = window.location.pathname;    
 	if ( pathname.indexOf('/allactivity') === -1 ) {
 		$('#cmdAbsterge').click(function () {
