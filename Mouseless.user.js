@@ -7,6 +7,8 @@
 // @grant       none
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 // ==/UserScript==
+this.$ = this.jQuery = jQuery.noConflict(true);
+
 var mouseless = {
     "0-9": ""
   , focusMap: []
@@ -52,7 +54,7 @@ var mouseless = {
         window.parent.$(window.parent.document).trigger($.Event('keydown', {ctrlKey: e.ctrlKey, keyCode: e.keyCode}));
       } else {
         console.log("TopWindow: {keyCode: " + e.keyCode + "}");
-        if(e.ctrlKey && e.keyCode == 96) { //ctrl+0
+        if(e.ctrlKey && (e.keyCode == 96 || e.keyCode == 48)) { //ctrl+0
           mouseless["toggle"]();
           if(mouseless["on"]) {
             $(document.activeElement).blur();
@@ -76,16 +78,16 @@ var mouseless = {
               $("[id^='mlb_']").remove();
               e.preventDefault();
               break;
-            case 96: mouseless["0-9"] += "0"; break;
-            case 97: mouseless["0-9"] += "1"; break;
-            case 98: mouseless["0-9"] += "2"; break;
-            case 99: mouseless["0-9"] += "3"; break;
-            case 100: mouseless["0-9"] += "4"; break;
-            case 101: mouseless["0-9"] += "5"; break;
-            case 102: mouseless["0-9"] += "6"; break;
-            case 103: mouseless["0-9"] += "7"; break;
-            case 104: mouseless["0-9"] += "8"; break;
-            case 105: mouseless["0-9"] += "9"; break;
+            case 96: case 48: mouseless["0-9"] += "0"; break;
+            case 97: case 49: mouseless["0-9"] += "1"; break;
+            case 98: case 50: mouseless["0-9"] += "2"; break;
+            case 99: case 51: mouseless["0-9"] += "3"; break;
+            case 100: case 52: mouseless["0-9"] += "4"; break;
+            case 101: case 53: mouseless["0-9"] += "5"; break;
+            case 102: case 54: mouseless["0-9"] += "6"; break;
+            case 103: case 55: mouseless["0-9"] += "7"; break;
+            case 104: case 56: mouseless["0-9"] += "8"; break;
+            case 105: case 57: mouseless["0-9"] += "9"; break;
           }
           console.log(mouseless);
         }
